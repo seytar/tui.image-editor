@@ -794,6 +794,8 @@ class Ui {
 
     if (this.submenu) {
       this._buttonElements[this.submenu].classList.remove('active');
+      // We needed it for grid visual
+      this._mainElement.classList.remove(`tui-image-editor-menu-${this.submenu}`);
       // Hide submenu
       this._subMenuElement.style.display = '';
       if (discardSelection) {
@@ -807,6 +809,8 @@ class Ui {
       this.submenu = null;
     } else {
       this._buttonElements[menuName].classList.add('active');
+      // We needed it for grid visual
+      this._mainElement.classList.add(`tui-image-editor-menu-${menuName}`);
 
       // Show submenu
       this._subMenuElement.style.display = 'table';
