@@ -23,6 +23,7 @@ import Draw from '@/ui/draw';
 import Filter from '@/ui/filter';
 import History from '@/ui/history';
 import Locale from '@/ui/locale/locale';
+import Submenu from '@/ui/submenuBase';
 
 const SUB_UI_COMPONENT = {
   Shape,
@@ -237,6 +238,7 @@ class Ui {
    *   @param {string} [options.menuBarPosition=bottom] - Let
    *   @param {boolean} [options.applyCropSelectionStyle=false] - Let
    *   @param {boolean} [options.usageStatistics=false] - Send statistics ping or not
+   *   @param {array} [options.subMenuAddons] - External submenu functions
    * @returns {Object} initialize option
    * @private
    */
@@ -290,8 +292,13 @@ class Ui {
    * @private
    */
   _makeSubMenu() {
+    const subMenuAddons = {};
+    snippet.forEach(this.options.subMenuAddons, (subMenuItem) => {
+      subMenuAddons[subMenuItem.name] = subMenuItem;
+    });
+
     snippet.forEach(this.options.menu, (menuName) => {
-      const SubComponentClass =
+      let SubComponentClass =
         SUB_UI_COMPONENT[menuName.replace(/^[a-z]/, ($0) => $0.toUpperCase())];
 
       // make menu element
@@ -300,13 +307,33 @@ class Ui {
       // menu btn element
       this._buttonElements[menuName] = this._menuBarElement.querySelector(`.tie-btn-${menuName}`);
 
-      // submenu ui instance
-      this[menuName] = new SubComponentClass(this._subMenuElement, {
+      const submenuProps = {
         locale: this._locale,
         makeSvgIcon: this.theme.makeMenSvgIconSet.bind(this.theme),
         menuBarPosition: this.options.menuBarPosition,
         usageStatistics: this.options.usageStatistics,
-      });
+      };
+
+      // Inject name and template html to sub menu addon
+      if (subMenuAddons.hasOwnProperty(menuName)) {
+        const { name, templateHtml } = subMenuAddons[menuName];
+        SubComponentClass = Submenu;
+        submenuProps.name = name;
+        submenuProps.templateHtml = templateHtml;
+      }
+
+      // submenu ui instance
+      this[menuName] = new SubComponentClass(this._subMenuElement, submenuProps);
+
+      // Set ui interface methods to sub menu addon injected by outside from tui
+      if (subMenuAddons.hasOwnProperty(menuName)) {
+        const { bindingMethods } = subMenuAddons[menuName];
+        snippet.forEach(bindingMethods, (callback, methodName) => {
+          this[menuName][methodName] = callback.bind(this[menuName]);
+        });
+
+        this[menuName].init();
+      }
     });
   }
 
