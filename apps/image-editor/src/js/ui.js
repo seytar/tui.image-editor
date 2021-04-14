@@ -784,9 +784,18 @@ class Ui {
    * @private
    */
   _changeMenu(menuName, toggle, discardSelection) {
+    const menuBarContentElements = this._subMenuElement.querySelectorAll(
+      `[class^="tui-image-editor-menu-"]`
+    );
+    // Hide all menu contents
+    snippet.forEach(menuBarContentElements, (mBCElement) => {
+      mBCElement.style.display = '';
+    });
+
     if (this.submenu) {
       this._buttonElements[this.submenu].classList.remove('active');
-      this._mainElement.classList.remove(`tui-image-editor-menu-${this.submenu}`);
+      // Hide submenu
+      this._subMenuElement.style.display = '';
       if (discardSelection) {
         this._actions.main.discardSelection();
       }
@@ -798,7 +807,12 @@ class Ui {
       this.submenu = null;
     } else {
       this._buttonElements[menuName].classList.add('active');
-      this._mainElement.classList.add(`tui-image-editor-menu-${menuName}`);
+
+      // Show submenu
+      this._subMenuElement.style.display = 'table';
+      this._subMenuElement.querySelector(`.tui-image-editor-menu-${menuName}`).style.display =
+        'table-cell';
+
       this.submenu = menuName;
       this[this.submenu].changeStartMode();
     }
