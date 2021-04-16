@@ -1,14 +1,7 @@
 import { extend } from 'tui-code-snippet';
 import Imagetracer from '@/helper/imagetracer';
 import { isSupportFileApi, base64ToBlob, toInteger, isEmptyCropzone } from '@/util';
-import {
-  eventNames,
-  historyNames,
-  drawingModes,
-  drawingMenuNames,
-  zoomModes,
-  componentNames,
-} from '@/consts';
+import { eventNames, historyNames, drawingModes, drawingMenuNames, zoomModes } from '@/consts';
 
 export default {
   /**
@@ -421,13 +414,9 @@ export default {
   _resizeAction() {
     return extend(
       {
-        getCurrentDimensions: () => {
-          return this._graphics.getComponent(componentNames.RESIZE).getCurrentDimensions();
-        },
+        getCurrentDimensions: () => this._graphics.getCurrentDimensions(),
         preview: (actor, value, lockState) => {
-          const resizeComponent = this._graphics.getComponent(componentNames.RESIZE);
-
-          const currentDimensions = resizeComponent.getCurrentDimensions();
+          const currentDimensions = this._graphics.getCurrentDimensions();
           const calcAspectRatio = () => currentDimensions.width / currentDimensions.height;
 
           let dimensions = {};
@@ -449,9 +438,10 @@ export default {
               }
               break;
             default:
+              dimensions = currentDimensions;
           }
 
-          resizeComponent.resize(dimensions).then(() => {
+          this._graphics.resize(dimensions).then(() => {
             this.ui.resizeEditor();
           });
 
@@ -460,15 +450,40 @@ export default {
             this.ui.resize.setHeightValue(dimensions.height);
           }
         },
+        lockAspectRatio: (lockState, min, max) => {
+          const { width, height } = this._graphics.getCurrentDimensions();
+          const aspectRatio = width / height;
+          if (lockState) {
+            if (width > height) {
+              const pMax = max / aspectRatio;
+              const pMin = min * aspectRatio;
+              this.ui.resize.setMaxHeightValue(pMax < max ? pMax : max);
+              this.ui.resize.setMinWidthValue(pMin > min ? pMin : min);
+              this.ui.resize.setMaxWidthValue(max);
+              this.ui.resize.setMinHeightValue(min);
+            } else {
+              const pMax = max * aspectRatio;
+              const pMin = min / aspectRatio;
+              this.ui.resize.setMaxWidthValue(pMax < max ? pMax : max);
+              this.ui.resize.setMinHeightValue(pMin > min ? pMin : min);
+              this.ui.resize.setMaxHeightValue(max);
+              this.ui.resize.setMinWidthValue(min);
+            }
+          } else {
+            this.ui.resize.setMaxHeightValue(max);
+            this.ui.resize.setMaxWidthValue(max);
+            this.ui.resize.setMinWidthValue(min);
+            this.ui.resize.setMinHeightValue(min);
+          }
+        },
         resize: (dimensions = null) => {
-          const resizeComponent = this._graphics.getComponent(componentNames.RESIZE);
           if (!dimensions) {
-            dimensions = resizeComponent.getCurrentDimensions();
+            dimensions = this._graphics.getCurrentDimensions();
           }
 
           this.resize(dimensions)
             .then(() => {
-              resizeComponent.setOriginalDimensions(dimensions);
+              this._graphics.setOriginalDimensions(dimensions);
               this.stopDrawingMode();
               this.ui.resizeEditor();
               this.ui.changeMenu('resize');
@@ -476,13 +491,12 @@ export default {
             ['catch']((message) => Promise.reject(message));
         },
         reset: (standByMode = false) => {
-          const resizeComponent = this._graphics.getComponent(componentNames.RESIZE);
-          const dimensions = resizeComponent.getOriginalDimensions();
+          const dimensions = this._graphics.getOriginalDimensions();
 
           this.ui.resize.setWidthValue(dimensions.width, true);
           this.ui.resize.setHeightValue(dimensions.height, true);
 
-          resizeComponent.resize(dimensions).then(() => {
+          this._graphics.resize(dimensions).then(() => {
             if (!standByMode) {
               this.stopDrawingMode();
               this.ui.resizeEditor();
@@ -631,7 +645,7 @@ export default {
         this.activeObjectId = null;
         if (this.ui.submenu === 'text') {
           this.changeCursor('text');
-        } else if (this.ui.submenu !== 'draw' && this.ui.submenu !== 'crop' && this.ui.submenu !== 'resize') {
+        } else if (!['draw', 'crop', 'resize'].includes(this.ui.submenu)) {
           this.stopDrawingMode();
         }
       },

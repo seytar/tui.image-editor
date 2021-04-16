@@ -25,13 +25,6 @@ class Resize extends Component {
      * @private
      */
     this._originalDimensions = null;
-
-    /**
-     * Lock aspect ratio state
-     * @type {boolean}
-     * @private
-     */
-    this._lockState = false;
   }
 
   /**
@@ -39,12 +32,10 @@ class Resize extends Component {
    * @returns {object}
    */
   getCurrentDimensions() {
-    if (!this._dimensions) {
-      const canvasImage = this.getCanvasImage();
-      this._dimensions = {
-        width: canvasImage.width,
-        height: canvasImage.height,
-      };
+    const canvasImage = this.getCanvasImage();
+    if (!this._dimensions && canvasImage) {
+      const { width, height } = canvasImage;
+      this._dimensions = { width, height };
     }
 
     return this._dimensions;
@@ -67,27 +58,21 @@ class Resize extends Component {
   }
 
   /**
-   * Set states of lock aspect ratio
-   * @param {boolean} lockState - Lock aspect ratio state
-   */
-  setLockState(lockState) {
-    this._lockState = lockState;
-  }
-
-  /**
    * Resize Image
    * @param {Object} dimensions - Resize dimensions
    * @returns {Promise}
-   * @private
    */
   resize(dimensions) {
     const canvasImage = this.getCanvasImage();
+    const { width, height, scaleX, scaleY } = canvasImage;
+    const { width: dimensionsWidth, height: dimensionsHeight } = dimensions;
+
     const scaleValues = {
-      scaleX: dimensions.width ? dimensions.width / canvasImage.width : canvasImage.scaleX,
-      scaleY: dimensions.height ? dimensions.height / canvasImage.height : canvasImage.scaleY,
+      scaleX: dimensionsWidth ? dimensionsWidth / width : scaleX,
+      scaleY: dimensionsHeight ? dimensionsHeight / height : scaleY,
     };
 
-    if (canvasImage.scaleX !== scaleValues.scaleX || canvasImage.scaleY !== scaleValues.scaleY) {
+    if (scaleX !== scaleValues.scaleX || scaleY !== scaleValues.scaleY) {
       canvasImage.set(scaleValues).setCoords();
 
       this._dimensions = {
