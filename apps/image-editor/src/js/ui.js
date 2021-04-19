@@ -327,12 +327,12 @@ class Ui {
 
       // Set ui interface methods to sub menu addon injected by outside from tui
       if (subMenuAddons.hasOwnProperty(menuName)) {
-        const { bindingMethods } = subMenuAddons[menuName];
-        snippet.forEach(bindingMethods, (callback, methodName) => {
+        const { submenu } = subMenuAddons[menuName];
+        snippet.forEach(submenu, (callback, methodName) => {
           this[menuName][methodName] = callback.bind(this[menuName]);
         });
 
-        this[menuName].init();
+        this[menuName].init(this._subMenuElement, submenuProps);
       }
     });
   }
