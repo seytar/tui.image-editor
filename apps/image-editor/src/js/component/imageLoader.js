@@ -30,6 +30,7 @@ class ImageLoader extends Component {
    * @returns {Promise}
    */
   load(imageName, img) {
+    this.graphics.resetZoom();
     let promise;
 
     if (!imageName && !img) {
