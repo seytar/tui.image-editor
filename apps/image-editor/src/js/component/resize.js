@@ -30,11 +30,12 @@ class Resize extends Component {
 
   /**
    * Get current dimensions
+   * @param {boolean} forceUpdate - Force update current dimensions
    * @returns {object}
    */
-  getCurrentDimensions() {
+  getCurrentDimensions(forceUpdate = false) {
     const canvasImage = this.getCanvasImage();
-    if (!this._dimensions && canvasImage) {
+    if (canvasImage && (forceUpdate || !this._dimensions)) {
       const { width, height } = canvasImage;
       this._dimensions = { width, height };
     }
@@ -91,7 +92,7 @@ class Resize extends Component {
    * Start resizing
    */
   start() {
-    const dimensions = this.getCurrentDimensions();
+    const dimensions = this.getCurrentDimensions(true);
     this.setOriginalDimensions(dimensions);
   }
 

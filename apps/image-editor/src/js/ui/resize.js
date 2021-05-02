@@ -24,13 +24,6 @@ class Resize extends Submenu {
 
     this._lockState = true;
 
-    /**
-     * Original dimensions
-     * @type {Object}
-     * @private
-     */
-    this._originalDimensions = null;
-
     this._els = {
       widthRange: new Range(
         {
@@ -59,10 +52,9 @@ class Resize extends Submenu {
     this.actions.modeChange('resize');
     const dimensions = this.actions.getCurrentDimensions();
 
-    this._originalDimensions = dimensions;
-
     this.setWidthValue(dimensions.width);
     this.setHeightValue(dimensions.height);
+    this._updateLockAspectRatio();
   }
 
   /**
@@ -197,6 +189,14 @@ class Resize extends Submenu {
    */
   _changeLockAspectRatio(event) {
     this._lockState = event.target.checked;
+    this._updateLockAspectRatio();
+  }
+
+  /**
+   * Change lock aspect ratio state
+   * @private
+   */
+  _updateLockAspectRatio() {
     this.actions.lockAspectRatio(
       this._lockState,
       defaultResizePixelValues.min,
