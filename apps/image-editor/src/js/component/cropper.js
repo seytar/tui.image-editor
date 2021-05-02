@@ -78,6 +78,9 @@ class Cropper extends Component {
     if (this._cropzone) {
       return;
     }
+
+    this.graphics.resetZoom();
+
     const canvas = this.getCanvas();
 
     canvas.forEachObject((obj) => {
