@@ -24,7 +24,9 @@ const command = {
       originalDimensions = resizeComp.getCurrentDimensions();
     }
 
-    this.undoData.dimensions = originalDimensions;
+    if (!this.isRedo) {
+      this.undoData.dimensions = originalDimensions;
+    }
 
     return resizeComp.resize(dimensions);
   },
