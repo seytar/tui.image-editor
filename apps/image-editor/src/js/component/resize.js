@@ -65,6 +65,7 @@ class Resize extends Component {
    * @returns {Promise}
    */
   resize(dimensions) {
+    this.graphics.resetZoom();
     const canvasImage = this.getCanvasImage();
     const { width, height, scaleX, scaleY } = canvasImage;
     const { width: dimensionsWidth, height: dimensionsHeight } = dimensions;
@@ -92,6 +93,7 @@ class Resize extends Component {
    * Start resizing
    */
   start() {
+    this.graphics.resetZoom();
     const dimensions = this.getCurrentDimensions(true);
     this.setOriginalDimensions(dimensions);
   }
