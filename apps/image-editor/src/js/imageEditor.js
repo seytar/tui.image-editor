@@ -183,7 +183,18 @@ class ImageEditor {
       const UIOption = options.includeUI;
       UIOption.usageStatistics = options.usageStatistics;
 
-      this.ui = new UI(wrapper, UIOption, this.getActions());
+      const actions = this.getActions();
+
+      snippet.forEach(UIOption.subMenuAddons, (subMenuItem) => {
+        const bindActions = {};
+        snippet.forEach(subMenuItem.actions, (act, actionKey) => {
+          bindActions[actionKey] = act.bind(this);
+        });
+        // Set action
+        actions[subMenuItem.name] = snippet.extend(bindActions);
+      });
+
+      this.ui = new UI(wrapper, UIOption, actions);
       options = this.ui.setUiDefaultSelectionStyle(options);
     }
 
