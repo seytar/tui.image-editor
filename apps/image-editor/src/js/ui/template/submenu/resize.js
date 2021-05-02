@@ -25,7 +25,7 @@ export default ({ locale, makeSvgIcon }) => `
             <div class="tui-image-editor-checkbox-wrap">
                 <div class="tui-image-editor-checkbox">
                     <label>
-                        <input type="checkbox" class="tie-lock-aspect-ratio">
+                        <input type="checkbox" class="tie-lock-aspect-ratio" checked="checked">
                         <span>${locale.localize('Lock Aspect Ratio')}</span>
                     </label>
                 </div>

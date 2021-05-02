@@ -22,7 +22,7 @@ class Resize extends Submenu {
 
     this.status = 'active';
 
-    this._lockState = false;
+    this._lockState = true;
 
     /**
      * Original dimensions

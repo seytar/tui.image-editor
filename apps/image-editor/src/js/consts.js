@@ -402,7 +402,7 @@ export const emptyCropRectValues = {
 
 export const defaultResizePixelValues = {
   realTimeEvent: true,
-  min: 32,
+  min: 1,
   max: 4088,
   value: 800,
 };
