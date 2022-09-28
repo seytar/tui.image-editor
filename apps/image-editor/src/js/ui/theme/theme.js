@@ -1,8 +1,10 @@
-import { extend, forEach, map } from 'tui-code-snippet';
+import extend from 'tui-code-snippet/object/extend';
+import forEach from 'tui-code-snippet/collection/forEach';
 import style from '@/ui/template/style';
 import standardTheme from '@/ui/theme/standard';
-import icon from '@svg/default.svg';
 import { styleLoad } from '@/util';
+
+import icon from '@svg/default.svg';
 
 /**
  * Theme manager
@@ -173,7 +175,8 @@ class Theme {
   _loadDefaultSvgIcon() {
     if (!document.getElementById('tui-image-editor-svg-default-icons')) {
       const parser = new DOMParser();
-      const dom = parser.parseFromString(icon, 'text/xml');
+      const encodedURI = icon.replace(/data:image\/svg\+xml;base64,/, '');
+      const dom = parser.parseFromString(atob(encodedURI), 'text/xml');
 
       document.body.appendChild(dom.documentElement);
     }
@@ -216,13 +219,15 @@ class Theme {
    * @private
    */
   _makeSvgItem(useIconTypes, menuName, isSubmenu) {
-    return map(useIconTypes, (iconType) => {
-      const svgIconPrefix = this._makeSvgIconPrefix(iconType, isSubmenu);
-      const iconName = this._toUnderScore(menuName);
-      const svgIconClassName = this._makeIconClassName(iconType, isSubmenu);
+    return useIconTypes
+      .map((iconType) => {
+        const svgIconPrefix = this._makeSvgIconPrefix(iconType, isSubmenu);
+        const iconName = this._toUnderScore(menuName);
+        const svgIconClassName = this._makeIconClassName(iconType, isSubmenu);
 
-      return `<use xlink:href="${svgIconPrefix}ic-${iconName}" class="${svgIconClassName}"/>`;
-    }).join('');
+        return `<use xlink:href="${svgIconPrefix}ic-${iconName}" class="${svgIconClassName}"/>`;
+      })
+      .join('');
   }
 
   /**

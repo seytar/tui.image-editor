@@ -1,4 +1,4 @@
-import snippet from 'tui-code-snippet';
+import forEachArray from 'tui-code-snippet/collection/forEachArray';
 import Colorpicker from '@/ui/tools/colorpicker';
 import Range from '@/ui/tools/range';
 import Submenu from '@/ui/submenuBase';
@@ -40,18 +40,16 @@ class Shape extends Submenu {
         },
         defaultShapeStrokeValues
       ),
-      fillColorpicker: new Colorpicker(
-        this.selector('.tie-color-fill'),
-        '',
-        this.toggleDirection,
-        this.usageStatistics
-      ),
-      strokeColorpicker: new Colorpicker(
-        this.selector('.tie-color-stroke'),
-        '#ffbb3b',
-        this.toggleDirection,
-        this.usageStatistics
-      ),
+      fillColorpicker: new Colorpicker(this.selector('.tie-color-fill'), {
+        defaultColor: '',
+        toggleDirection: this.toggleDirection,
+        usageStatistics: this.usageStatistics,
+      }),
+      strokeColorpicker: new Colorpicker(this.selector('.tie-color-stroke'), {
+        defaultColor: '#ffbb3b',
+        toggleDirection: this.toggleDirection,
+        usageStatistics: this.usageStatistics,
+      }),
     };
 
     this.colorPickerControls.push(this._els.fillColorpicker);
@@ -99,7 +97,7 @@ class Shape extends Submenu {
     this._els.fillColorpicker.on('changeShow', this.colorPickerChangeShow.bind(this));
     this._els.strokeColorpicker.on('changeShow', this.colorPickerChangeShow.bind(this));
 
-    snippet.forEachArray(
+    forEachArray(
       this.colorPickerInputBoxes,
       (inputBox) => {
         inputBox.addEventListener(eventNames.FOCUS, this._onStartEditingInputBox.bind(this));
@@ -119,7 +117,7 @@ class Shape extends Submenu {
     this._els.fillColorpicker.off();
     this._els.strokeColorpicker.off();
 
-    snippet.forEachArray(
+    forEachArray(
       this.colorPickerInputBoxes,
       (inputBox) => {
         inputBox.removeEventListener(eventNames.FOCUS, this._onStartEditingInputBox.bind(this));

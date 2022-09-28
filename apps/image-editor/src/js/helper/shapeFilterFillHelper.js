@@ -1,8 +1,6 @@
-/**
- * @author NHN. FE Development Team <dl_javascript@nhn.com>
- * @fileoverview Shape resize helper
- */
-import { forEach, map, extend } from 'tui-code-snippet';
+import { fabric } from 'fabric';
+import forEach from 'tui-code-snippet/collection/forEach';
+import extend from 'tui-code-snippet/object/extend';
 import resizeHelper from '@/helper/shapeResizeHelper';
 import { capitalizeString, flipObject, setCustomProperty, getCustomProperty } from '@/util';
 
@@ -91,7 +89,7 @@ export function rePositionFilterTypeFillImage(shapeObj) {
  * @returns {object}
  */
 export function makeFilterOptionFromFabricImage(imageObject) {
-  return map(imageObject.filters, (filter) => {
+  return imageObject.filters.map((filter) => {
     const [key] = Object.keys(filter);
 
     return {
@@ -452,7 +450,7 @@ function calculateLineAngleOfOutsideCanvas(type, shapePointNavigation, linePoint
   const { startPointIndex, endPointIndex1, endPointIndex2 } = linePointsOfOneVertexIndex;
   const horizontalVerticalAngle = type === 'x' ? 180 : 270;
 
-  return map([endPointIndex1, endPointIndex2], (pointIndex) => {
+  return [endPointIndex1, endPointIndex2].map((pointIndex) => {
     const startPoint = shapePointNavigation[startPointIndex];
     const endPoint = shapePointNavigation[pointIndex];
     const diffY = startPoint.y - endPoint.y;
@@ -518,12 +516,8 @@ function getShapeEdgePoint(shapeObj) {
  * @returns {Object} Rotated shape dimension
  */
 function getRotatedDimension(shapeObj) {
-  const [
-    { x: ax, y: ay },
-    { x: bx, y: by },
-    { x: cx, y: cy },
-    { x: dx, y: dy },
-  ] = getShapeEdgePoint(shapeObj);
+  const [{ x: ax, y: ay }, { x: bx, y: by }, { x: cx, y: cy }, { x: dx, y: dy }] =
+    getShapeEdgePoint(shapeObj);
 
   const left = Math.min(ax, bx, cx, dx);
   const top = Math.min(ay, by, cy, dy);

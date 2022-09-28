@@ -1,10 +1,5 @@
-/**
- * @author NHN. FE Development Team <dl_javascript@nhn.com>
- * @fileoverview Set object properties
- */
-import snippet from 'tui-code-snippet';
+import forEachOwnProperties from 'tui-code-snippet/collection/forEachOwnProperties';
 import commandFactory from '@/factory/command';
-import { Promise } from '@/util';
 import { commandNames, rejectMessages } from '@/consts';
 
 const command = {
@@ -32,7 +27,7 @@ const command = {
     }
 
     this.undoData.props = {};
-    snippet.forEachOwnProperties(props, (value, key) => {
+    forEachOwnProperties(props, (value, key) => {
       this.undoData.props[key] = targetObj[key];
     });
 

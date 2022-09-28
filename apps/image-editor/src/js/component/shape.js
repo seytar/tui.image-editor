@@ -1,9 +1,5 @@
-/**
- * @author NHN. FE Development Team <dl_javascript@nhn.com>
- * @fileoverview Shape component
- */
-import { extend } from 'tui-code-snippet';
-import fabric from 'fabric';
+import { fabric } from 'fabric';
+import extend from 'tui-code-snippet/object/extend';
 import Component from '@/interface/component';
 import resizeHelper from '@/helper/shapeResizeHelper';
 import {
@@ -15,7 +11,6 @@ import {
   resetFillPatternCanvas,
 } from '@/helper/shapeFilterFillHelper';
 import {
-  Promise,
   changeOrigin,
   getCustomProperty,
   getFillTypeFromOption,
@@ -594,7 +589,7 @@ export default class Shape extends Component {
 
     const { angle, left, top } = shapeObj;
 
-    activeSelection.realizeTransform(shapeObj);
+    fabric.util.addTransformToObject(shapeObj, activeSelection.calcTransformMatrix());
     this._resetPositionFillFilter(shapeObj);
 
     shapeObj.set({

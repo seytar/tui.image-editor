@@ -6,35 +6,43 @@
 [![npm version](https://img.shields.io/npm/v/tui-image-editor.svg)](https://www.npmjs.com/package/tui-image-editor)
 [![license](https://img.shields.io/github/license/nhn/tui.image-editor.svg)](https://github.com/nhn/tui.image-editor/blob/master/LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/nhn/tui.image-editor/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
-[![code with hearth by NHN](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-NHN-ff1414.svg)](https://github.com/nhn)
+[![code with hearth by NHN Cloud](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-NHN_CLOUD-ff1414.svg)](https://github.com/nhn)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
-## Packages
+## 📦 Packages
 
-- [toast-ui.image-editor](https://github.com/nhn/tui.image-editor/tree/main/apps/image-editor) - Plain JavaScript component implemented by [NHN](https://github.com/nhn).
-- [toast-ui.vue-image-editor](https://github.com/nhn/tui.image-editor/tree/main/apps/vue-image-editor) - **Vue** wrapper component is powered by [NHN](https://github.com/nhn).
-- [toast-ui.react-image-editor](https://github.com/nhn/tui.image-editor/tree/main/apps/react-image-editor) - **React** wrapper component is powered by [NHN](https://github.com/nhn).
+- [toast-ui.image-editor](https://github.com/nhn/tui.image-editor/tree/master/apps/image-editor
+) - Plain JavaScript component implemented by [NHN Cloud](https://github.com/nhn).
+- [toast-ui.vue-image-editor](https://github.com/nhn/tui.image-editor/tree/master/apps/vue-image-editor
+) - **Vue** wrapper component is powered by [NHN Cloud](https://github.com/nhn).
+- [toast-ui.react-image-editor](https://github.com/nhn/tui.image-editor/tree/master/apps/react-image-editor
+) - **React** wrapper component is powered by [NHN Cloud](https://github.com/nhn).
 
 ![6 -20-2018 17-45-54](https://user-images.githubusercontent.com/35218826/41647896-7b218ae0-74b2-11e8-90db-d7805cc23e8c.gif)
 
 ## 🚩 Table of Contents
 
-- [Browser Support](#-browser-support)
-- [Has full features that stick to the basic.](#-has-full-features-that-stick-to-the-basic)
-  - [Photo manipulation](#photo-manipulation)
-  - [Integration function](#integration-function)
-  - [Powerful filter function](#powerful-filter-function)
-- [Easy to apply the size and design you want](#-easy-to-apply-the-size-and-design-you-want)
-  - [Can be used everywhere](#can-be-used-everywhere)
-  - [Nice default & Fully customizable Themes](#nice-default--fully-customizable-themes)
-- [Features](#-features)
-- [Pull Request Steps](#-pull-request-steps)
-- [Documents](#-documents)
-- [Contributing](#-contributing)
-- [Dependency](#-dependency)
-- [TOAST UI Family](#-toast-ui-family)
-- [Used By](#-used-by)
-- [License](#-license)
+- [!Toast UI ImageEditor](#)
+  - [📦 Packages](#packages)
+  - [🚩 Table of Contents](#-table-of-contents)
+  - [🌏 Browser Support](#-browser-support)
+  - [💪 Has full features that stick to the basic.](#-has-full-features-that-stick-to-the-basic)
+    - [Photo manipulation](#photo-manipulation)
+    - [Integration function](#integration-function)
+    - [Powerful filter function](#powerful-filter-function)
+  - [🙆 Easy to apply the size and design you want](#-easy-to-apply-the-size-and-design-you-want)
+    - [Can be used everywhere.](#can-be-used-everywhere)
+    - [Nice default & Fully customizable Themes](#nice-default--fully-customizable-themes)
+  - [🎨 Features](#-features)
+  - [🔧 Pull Request Steps](#-pull-request-steps)
+    - [Setup](#setup)
+    - [Pull Request](#pull-request)
+  - [📙 Documents](#-documents)
+  - [💬 Contributing](#-contributing)
+  - [🔩 Dependency](#-dependency)
+  - [🍞 TOAST UI Family](#-toast-ui-family)
+  - [🚀 Used By](#-used-by)
+  - [📜 License](#-license)
 
 ## 🌏 Browser Support
 
@@ -145,7 +153,7 @@ Run npm scripts and develop yourself with the following process.
 
 Fork `develop` branch into your personal repository.
 Clone it to local computer. Install node modules.
-Before starting development, you should check to haveany errors.
+Before starting development, you should check if there are any errors.
 
 ```sh
 $ git clone https://github.com/{your-personal-repo}/[[repo name]].git
@@ -155,10 +163,10 @@ $ npm install
 
 ### Pull Request
 
-Before PR, check to test lastly and then check any errors.
-If it has no error, commit and then push it!
+Before uploading your PR, run test one last time to check if there are any errors.
+If it has no errors, commit and then push it!
 
-For more information on PR's step, please see links of Contributing section.
+For more information on PR's steps, please see links in the Contributing section.
 
 ## 📙 Documents
 
@@ -190,7 +198,7 @@ For more information on PR's step, please see links of Contributing section.
 
 ## 🚀 Used By
 
-- [TOAST Dooray! - Collaboration Service (Project, Messenger, Mail, Calendar, Drive, Wiki, Contacts)](https://dooray.com/home/)
+- [NHN Dooray! - Collaboration Service (Project, Messenger, Mail, Calendar, Drive, Wiki, Contacts)](https://dooray.com/home/)
 - [Catalyst](https://catalystapp.co/)
 
 ## 📜 License

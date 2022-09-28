@@ -1,6 +1,6 @@
-import { extend } from 'tui-code-snippet';
+import extend from 'tui-code-snippet/object/extend';
 import Imagetracer from '@/helper/imagetracer';
-import { isSupportFileApi, base64ToBlob, toInteger, isEmptyCropzone } from '@/util';
+import { isSupportFileApi, base64ToBlob, toInteger, isEmptyCropzone, includes } from '@/util';
 import { eventNames, historyNames, drawingModes, drawingMenuNames, zoomModes } from '@/consts';
 
 export default {
@@ -420,7 +420,7 @@ export default {
           const calcAspectRatio = () => currentDimensions.width / currentDimensions.height;
 
           let dimensions = {};
-          switch(actor) {
+          switch (actor) {
             case 'width':
               dimensions.width = value;
               if (lockState) {
@@ -448,38 +448,6 @@ export default {
           if (lockState) {
             this.ui.resize.setWidthValue(dimensions.width);
             this.ui.resize.setHeightValue(dimensions.height);
-          }
-        },
-        lockAspectRatio: (lockState, min, max) => {
-          const { width, height } = this._graphics.getCurrentDimensions();
-          const aspectRatio = width / height;
-          if (lockState) {
-            if (width > height) {
-              const pMax = max / aspectRatio;
-              const pMin = min * aspectRatio;
-              this.ui.resize.setLimit({
-                minWidth: pMin > min ? pMin : min,
-                minHeight: min,
-                maxWidth: max,
-                maxHeight: pMax < max ? pMax : max,
-              });
-            } else {
-              const pMax = max * aspectRatio;
-              const pMin = min / aspectRatio;
-              this.ui.resize.setLimit({
-                minWidth: min,
-                minHeight: pMin > min ? pMin : min,
-                maxWidth: pMax < max ? pMax : max,
-                maxHeight: max,
-              });
-            }
-          } else {
-            this.ui.resize.setLimit({
-              minWidth: min,
-              minHeight: min,
-              maxWidth: max,
-              maxHeight: max,
-            });
           }
         },
         resize: (dimensions = null) => {
@@ -651,7 +619,7 @@ export default {
         this.activeObjectId = null;
         if (this.ui.submenu === 'text') {
           this.changeCursor('text');
-        } else if (!['draw', 'crop', 'resize'].includes(this.ui.submenu)) {
+        } else if (!includes(['draw', 'crop', 'resize'], this.ui.submenu)) {
           this.stopDrawingMode();
         }
       },

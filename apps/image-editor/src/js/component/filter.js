@@ -1,11 +1,8 @@
-/**
- * @author NHN. FE Development Team <dl_javascript@nhn.com>
- * @fileoverview Add filter module
- */
-import { isUndefined, extend, forEach, filter } from 'tui-code-snippet';
-import fabric from 'fabric';
+import isUndefined from 'tui-code-snippet/type/isUndefined';
+import extend from 'tui-code-snippet/object/extend';
+import forEach from 'tui-code-snippet/collection/forEach';
+import { fabric } from 'fabric';
 import Component from '@/interface/component';
-import { Promise } from '@/util';
 import { rejectMessages, componentNames } from '@/consts';
 import Mask from '@/extension/mask';
 import Sharpen from '@/extension/sharpen';
@@ -214,7 +211,7 @@ class Filter extends Component {
    */
   _removeFilter(sourceImg, type) {
     const fabricType = this._getFabricFilterType(type);
-    sourceImg.filters = filter(sourceImg.filters, (value) => value.type !== fabricType);
+    sourceImg.filters = sourceImg.filters.filter((value) => value.type !== fabricType);
   }
 
   /**
